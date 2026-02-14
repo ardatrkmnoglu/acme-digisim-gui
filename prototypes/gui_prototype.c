@@ -6,8 +6,18 @@
 #include <stdio.h>
 
 #define GRID_SIZE 20
-#define WIN_WIDTH 800
-#define WIN_HEIGHT 600
+#define WIN_WIDTH 1200
+#define WIN_HEIGHT 900
+#define TOOLBAR_HEIGHT 60
+#define BUTTON_WIDTH 80
+
+typedef enum {
+    TOOL_SELECT,
+    TOOL_AND,
+    TOOL_OR,
+    TOOL_WIRE
+} ToolType;
+ToolType current_tool = TOOL_SELECT;
 
 unsigned long create_color(Display* dpy, int s, int r, int g, int b) {
 	XColor color;
@@ -19,10 +29,46 @@ unsigned long create_color(Display* dpy, int s, int r, int g, int b) {
 	return color.pixel;
 }
 
-void (*draw_unit)(Display* dpy, Window w, GC gc, int size, int x, int y);
+// void (*draw_unit)(Display* dpy, Window w, GC gc, int size, int x, int y);
+
+void draw_and_gate(Display* dpy, Window w, GC gc, int size, int x, int y) {
+	
+}
+
+void draw_nand_gate(Display* dpy, Window w, GC gc, int size, int x, int y) {
+	
+}
+
+void draw_or_gate(Display* dpy, Window w, GC gc, int size, int x, int y) {
+	
+}
+
+void draw_nor_gate(Display* dpy, Window w, GC gc, int size, int x, int y) {
+	
+}
+
+void draw_xor_gate(Display* dpy, Window w, GC gc, int size, int x, int y) {
+	
+}
+
+void draw_xnor_gate(Display* dpy, Window w, GC gc, int size, int x, int y) {
+	
+}
+
+void draw_not_gate(Display* dpy, Window w, GC gc, int size, int x, int y) {
+	
+}
+
+void draw_buffer(Display* dpy, Window w, GC gc, int size, int x, int y) {
+	
+}
+
+void draw_threestate_buffer(Display* dpy, Window w, GC gc, int size, int x, int y) {
+	
+}
 
 void draw_grid(Display *d, Window w, GC gc) {
-	for (int y = 0; y < WIN_HEIGHT; y += GRID_SIZE) {
+	for (int y = TOOLBAR_HEIGHT; y < WIN_HEIGHT; y += GRID_SIZE) {
 		for (int x = 0; x < WIN_WIDTH; x += GRID_SIZE) {
 			XDrawPoint(d, w, gc, x, y);
 		}
@@ -37,7 +83,10 @@ int main() {
 
 	display = XOpenDisplay(0);
 	screen = XDefaultScreen(display);
-	win = XCreateSimpleWindow(display, XDefaultRootWindow(display), 100, 100, 1200, 900, 1, BlackPixel(display, screen), WhitePixel(display, screen));
+	win = XCreateSimpleWindow(display, XDefaultRootWindow(display),
+				  100, 100, WIN_WIDTH, WIN_HEIGHT, 1,
+				  BlackPixel(display, screen),
+				  WhitePixel(display, screen));
 
 	XStoreName(display, win, "ACME Digisim - v0.0.1 Prototype");
 
